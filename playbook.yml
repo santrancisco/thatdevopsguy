@@ -1,0 +1,33 @@
+---
+- hosts: all
+  sudo: true
+  vars_files:
+    - .settings.yml
+
+  pre_tasks:
+    - name: just an echo
+      debug:
+        msg: Running Ansible playbook
+    - name: check apt last update
+      stat: path=/var/cache/apt
+      register: apt_cache_stat
+
+    - name: Update apt cache    #Uncomment this to yes when executing the first time
+      apt:
+        update_cache: yes
+      #when: ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > 60*60*12
+      ## NOTE: When this script first run against vagrant box, though apt-cache is outofdate,
+      ## The creation time of /var/cache/apt is still new so it would skip this step
+
+  roles:
+    - roles/git
+    - roles/ruby
+    - roles/pexpect ## pexpect is required to use expect module
+    - roles/cf_cli
+    - roles/cf_uaac
+    - roles/aws_cli
+
+  tasks:
+    - name: Adding users
+      include: createuser.yml
+      with_items: users

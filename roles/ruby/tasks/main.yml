@@ -1,0 +1,14 @@
+---
+- name: check ruby version
+  command: ruby -v
+  register: rubyversion
+  ignore_errors: true
+
+- name: Only install if missing
+  debug:
+    msg: "Ruby version installed on host: {{rubyversion.stdout}}"
+  when: rubyversion.rc !=0 or rubyversion.stdout.split()[1] | version_compare(ruby.version, ">=")
+
+- name: Run install if installed version is less than requirement
+  include: installruby.yml
+  when: rubyversion.rc !=0 or rubyversion.stdout.split()[1] | version_compare(ruby.version, "<")

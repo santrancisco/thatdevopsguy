@@ -1,0 +1,10 @@
+---
+- name: make sure python pip is installed
+  sudo: true
+  apt: pkg=python-pip state=latest
+  tags: git
+
+- name:  install pip
+  pip :
+    name : pexpect
+  sudo: yes

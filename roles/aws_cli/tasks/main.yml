@@ -1,0 +1,16 @@
+---
+- name: make sure python-dev is installed
+  sudo: true
+  apt: pkg=python-dev state=latest
+  tags: python-dev
+
+- name: make sure python pip is installed
+  sudo: true
+  apt: pkg=python-pip state=latest
+  tags: pip
+
+- name:  install awscli
+  sudo: true
+  pip :
+    name : awscli
+    state: latest

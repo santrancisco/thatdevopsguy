@@ -1,0 +1,84 @@
+- name: Adding users
+  user:
+    name: "{{item.name}}"
+    comment: "{{item.name}} user"
+    append: true
+    createhome: true
+    state: present
+
+- name: Ensures /home/{{item.name}}/.aws dir exists
+  sudo: true
+  file:
+    path: "/home/{{item.name}}/.aws"
+    state: directory
+    mode: 0600
+    owner: "{{item.name}}"
+    group: "{{item.name}}"
+  when: item.aws is defined
+
+- name: Copy config file with aws setting
+  sudo: true
+  template:
+    src: "templates/aws/config.j2"
+    dest: "/home/{{item.name}}/.aws/config"
+    mode: 0600
+    owner: "{{item.name}}"
+    group: "{{item.name}}"
+  when: item.aws is defined
+
+- name: Copy credentials file with aws creds
+  sudo: true
+  template:
+    src: "templates/aws/credentials.j2"
+    dest: "/home/{{item.name}}/.aws/credentials"
+    mode: 0600
+    mode: 0600
+    owner: "{{item.name}}"
+    group: "{{item.name}}"
+  when: item.aws is defined
+
+- name: Configure cf endpoint
+  become: true
+  become_user: "{{item.name}}"
+  command: "cf api {{item.cf_cli.api_endpoint}} {{item.cf_cli.options}}"
+  register: setcfapioutput
+  when: item.cf_cli is defined
+
+- debug: msg="{{ setcfapioutput.stdout }}"
+  become: true
+  become_user: "{{item.name}}"
+  when: item.cf_cli is defined
+
+- name: Login to cf account
+  become: true
+  become_user: "{{item.name}}"
+  expect:
+    command: "cf login"
+    responses:
+      Email: "{{item.cf_cli.username}}"
+      Password: "{{item.cf_cli.password}}"
+    echo: yes
+  when: item.cf_cli is defined
+
+- name: Configure cf endpoint
+  become: true
+  become_user: "{{item.name}}"
+  command: "uaac target {{item.uaac.uaa_endpoint}} {{item.uaac.options}}"
+  register: setuaacoutput
+  when: item.uaac is defined
+
+- debug: msg="{{ setuaacoutput.stdout }}"
+  become: true
+  become_user: "{{item.name}}"
+  when: item.uaac is defined
+
+- name: Login to cf account
+  become: true
+  become_user: "{{item.name}}"
+  expect:
+    command: "uaac token client get"
+    responses:
+      "Client ID": "{{item.uaac.client_id}}"
+      "Client secret": "{{item.uaac.client_secret}}"
+    echo: yes
+  when: item.uaac is defined

@@ -1,0 +1,24 @@
+---
+
+## List of user here:
+users:
+  - name: acld
+    aws:
+      region: ap-southeast-2
+      aws_access_key_id : YOUR_ACCESS_KEY_ID
+      aws_secret_access_key : YOUR_SECRET_ACCESS_KEY
+  - name: pcfdev
+    aws:
+      region: ap-southeast-2
+      aws_access_key_id : YOUR_ACCESS_KEY_ID
+      aws_secret_access_key : YOUR_SECRET_ACCESS_KEY
+    cf_cli:
+      api_endpoint : https://api.local.pcfdev.io
+      username : user
+      password : pass
+      options : "--skip-ssl-validation"
+    uaac:
+      uaa_endpoint: https://uaa.local.pcfdev.io
+      client_id : admin
+      client_secret : admin-client-secret
+      options : "--skip-ssl-validation"

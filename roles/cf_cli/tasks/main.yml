@@ -1,0 +1,13 @@
+---
+- name: download cf-cli
+  sudo: true
+  get_url: >
+    url={{ installfile_url }}
+    dest=/tmp/cf-cli.deb
+    owner=root
+    group=root
+    mode=0755
+
+- name: install cf-cli
+  sudo: true
+  command: "dpkg -i /tmp/cf-cli.deb"

@@ -1,0 +1,47 @@
+- name: download ruby
+  sudo: true
+  get_url:
+    url: http://ftp.ruby-lang.org/pub/ruby/ruby-{{ruby.version}}.tar.gz
+    dest: /tmp/
+    owner: root
+    group: root
+    mode: 0755
+
+- name: unpack
+  sudo: true
+  unarchive:
+    src: /tmp/ruby-{{ruby.version}}.tar.gz
+    dest: /tmp/
+    #remote_src: true
+    copy: false
+
+- name: install dependencies
+  sudo: yes
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - build-essential
+    - git-core
+    - curl
+    - sqlite3
+    - libsqlite3-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - libreadline-dev
+    - libyaml-dev
+    - libcurl4-openssl-dev
+    - libncurses5-dev
+    - libgdbm-dev
+    - libffi-dev
+
+## Installing Ruby
+- name: Running "configure" for Ruby
+  sudo: true
+  command: './configure chdir=/tmp/ruby-{{ruby.version}}'
+
+- name: Running "make" for Ruby
+  sudo: true
+  command: 'make chdir=/tmp/ruby-{{ ruby.version }}'
+
+- name: Running "make install" for Ruby
+  sudo: true
+  command: 'make install chdir=/tmp/ruby-{{ruby.version}}'

@@ -1,0 +1,6 @@
+- name: Installing uaac cli
+  sudo: true
+  command: "gem install cf-uaac"
+  # gem:
+  #   name: cf-uaac
+  #   state: latest
