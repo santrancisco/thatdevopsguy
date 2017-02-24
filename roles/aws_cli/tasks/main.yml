@@ -1,16 +1,19 @@
 ---
 - name: make sure python-dev is installed
-  sudo: true
+  become: yes
+  become_method: sudo
   apt: pkg=python-dev state=latest
   tags: python-dev
 
 - name: make sure python pip is installed
-  sudo: true
+  become: yes
+  become_method: sudo
   apt: pkg=python-pip state=latest
   tags: pip
 
 - name:  install awscli
-  sudo: true
+  become: yes
+  become_method: sudo
   pip :
     name : awscli
     state: latest

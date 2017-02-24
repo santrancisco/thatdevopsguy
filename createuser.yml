@@ -7,7 +7,8 @@
     state: present
 
 - name: Ensures /home/{{item.name}}/.aws dir exists
-  sudo: true
+  become: yes
+  become_method: sudo
   file:
     path: "/home/{{item.name}}/.aws"
     state: directory
@@ -17,7 +18,8 @@
   when: item.aws is defined
 
 - name: Copy config file with aws setting
-  sudo: true
+  become: yes
+  become_method: sudo
   template:
     src: "templates/aws/config.j2"
     dest: "/home/{{item.name}}/.aws/config"
@@ -27,7 +29,8 @@
   when: item.aws is defined
 
 - name: Copy credentials file with aws creds
-  sudo: true
+  become: yes
+  become_method: sudo
   template:
     src: "templates/aws/credentials.j2"
     dest: "/home/{{item.name}}/.aws/credentials"
@@ -38,19 +41,19 @@
   when: item.aws is defined
 
 - name: Configure cf endpoint
-  become: true
+  become: yes
   become_user: "{{item.name}}"
   command: "cf api {{item.cf_cli.api_endpoint}} {{item.cf_cli.options}}"
   register: setcfapioutput
   when: item.cf_cli is defined
 
 - debug: msg="{{ setcfapioutput.stdout }}"
-  become: true
+  become: yes
   become_user: "{{item.name}}"
   when: item.cf_cli is defined
 
 - name: Login to cf account
-  become: true
+  become: yes
   become_user: "{{item.name}}"
   expect:
     command: "cf login"

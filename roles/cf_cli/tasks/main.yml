@@ -1,6 +1,7 @@
 ---
 - name: download cf-cli
-  sudo: true
+  become: yes
+  become_method: sudo
   get_url: >
     url={{ installfile_url }}
     dest=/tmp/cf-cli.deb
@@ -9,5 +10,6 @@
     mode=0755
 
 - name: install cf-cli
-  sudo: true
+  become: yes
+  become_method: sudo
   command: "dpkg -i /tmp/cf-cli.deb"
