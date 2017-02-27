@@ -1,5 +1,6 @@
 - name: Installing uaac cli
-  sudo: true
+  become: yes
+  become_method: sudo
   command: "gem install cf-uaac"
   # gem:
   #   name: cf-uaac

@@ -1,5 +1,6 @@
 - name: download ruby
-  sudo: true
+  become: yes
+  become_method: sudo
   get_url:
     url: http://ftp.ruby-lang.org/pub/ruby/ruby-{{ruby.version}}.tar.gz
     dest: /tmp/
@@ -8,7 +9,8 @@
     mode: 0755
 
 - name: unpack
-  sudo: true
+  become: yes
+  become_method: sudo
   unarchive:
     src: /tmp/ruby-{{ruby.version}}.tar.gz
     dest: /tmp/
@@ -16,7 +18,8 @@
     copy: false
 
 - name: install dependencies
-  sudo: yes
+  become: yes
+  become_method: sudo
   apt: pkg={{ item }} state=installed
   with_items:
     - build-essential
@@ -35,13 +38,16 @@
 
 ## Installing Ruby
 - name: Running "configure" for Ruby
-  sudo: true
+  become: yes
+  become_method: sudo
   command: './configure chdir=/tmp/ruby-{{ruby.version}}'
 
 - name: Running "make" for Ruby
-  sudo: true
+  become: yes
+  become_method: sudo
   command: 'make chdir=/tmp/ruby-{{ ruby.version }}'
 
 - name: Running "make install" for Ruby
-  sudo: true
+  become: yes
+  become_method: sudo
   command: 'make install chdir=/tmp/ruby-{{ruby.version}}'

@@ -1,10 +1,12 @@
 ---
 - name: make sure python pip is installed
-  sudo: true
+  become: yes
+  become_method: sudo
   apt: pkg=python-pip state=latest
   tags: git
 
 - name:  install pip
   pip :
     name : pexpect
-  sudo: yes
+  become: yes
+  become_method: sudo
