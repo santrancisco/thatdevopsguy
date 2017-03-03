@@ -59,6 +59,7 @@
     responses:
       Email: "{{item.cf_cli.username}}"
       Password: "{{item.cf_cli.password}}"
+      Org: ""
     echo: yes
   when: item.cf_cli is defined
 
