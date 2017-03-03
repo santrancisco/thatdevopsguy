@@ -22,3 +22,10 @@ users:
       client_id : admin
       client_secret : admin-client-secret
       options : "--skip-ssl-validation"
+    ssh:
+      ssh_name: id_rsa
+      ssh_key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        SOMEDATA
+        HERE
+        -----END RSA PRIVATE KEY-----
