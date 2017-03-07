@@ -12,16 +12,17 @@
     - name: check apt last update
       stat: path=/var/cache/apt
       register: apt_cache_stat
-
-    - name: Update apt cache    #Uncomment this to yes when executing the first time
+    - name: Update apt cache    
       apt:
-      update_cache: yes
-      #when: ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > 60*60*12
+        update_cache: yes
+      # IMPORTANT: Comment the line below when executing the first time to force apt-cache update
+      when: ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > 60*60*12
       ## NOTE: When this script first run against vagrant box, though apt-cache is outofdate,
       ## The creation time of /var/cache/apt is still new so it would skip this step
 
   roles:
     - roles/git
+    - roles/gpg
     - roles/ruby
     - roles/pexpect ## pexpect is required to use expect module
     - roles/cf_cli

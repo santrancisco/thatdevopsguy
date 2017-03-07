@@ -23,9 +23,20 @@ users:
       client_secret : admin-client-secret
       options : "--skip-ssl-validation"
     ssh:
-      ssh_name: id_rsa
+      ssh_name: id_rsa_git
       ssh_key: |
         -----BEGIN RSA PRIVATE KEY-----
         SOMEDATA
         HERE
         -----END RSA PRIVATE KEY-----
+      ssh_config: |
+        host github.com
+        HostName github.com
+        IdentityFile ~/.ssh/id_rsa_git
+        User git
+    gpg:
+      private_key: |
+        -----BEGIN PGP PRIVATE KEY BLOCK-----
+        Comment: GPGTools - https://gpgtools.org
+        ....
+        -----END PGP PRIVATE KEY BLOCK-----

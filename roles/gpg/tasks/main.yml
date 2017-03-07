@@ -1,0 +1,6 @@
+---
+- name: install git
+  become: yes
+  become_method: sudo
+  apt: pkg=gpgv2 state=installed
+  tags: gpgv2

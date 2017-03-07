@@ -60,6 +60,7 @@
       Email: "{{item.cf_cli.username}}"
       Password: "{{item.cf_cli.password}}"
       Org: ""
+      Space: ""
     echo: yes
   when: item.cf_cli is defined
 
@@ -107,3 +108,38 @@
     owner: "{{item.name}}"
     group: "{{item.name}}"
   when: item.ssh is defined
+
+- name: Copy content of ssh key over 
+  become: yes
+  become_method: sudo
+  copy:
+    content: "{{item.ssh.ssh_config}}"
+    dest: "/home/{{item.name}}/.ssh/config"
+    mode: 0600
+    owner: "{{item.name}}"
+    group: "{{item.name}}"
+  when: item.ssh.ssh_config is defined
+
+- name: Create temp gpg key file
+  become: yes
+  become_user: "{{item.name}}"
+  copy:
+    content: "{{item.gpg.private_key}}"
+    dest: "/home/{{item.name}}/tempgpg.key"
+    mode: 0600
+  when: item.gpg is defined
+
+- name: Import gpg key
+  become: yes
+  become_user: "{{item.name}}"
+  command: "gpg --import /home/{{item.name}}/tempgpg.key"
+  when: item.gpg is defined
+
+- name: Remove temp gpg key
+  become: yes
+  become_user: "{{item.name}}"
+  file:
+    dest: "/home/{{item.name}}/tempgpg.key"
+    state: absent
+  when: item.gpg is defined
+
