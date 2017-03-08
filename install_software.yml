@@ -2,8 +2,6 @@
 - hosts: all
   become: yes
   become_method: sudo
-  vars_files:
-    - .settings.yml
 
   pre_tasks:
     - name: just an echo
@@ -28,8 +26,5 @@
     - roles/cf_cli
     - roles/cf_uaac
     - roles/aws_cli
+    - roles/oathtool
 
-  tasks:
-    - name: Adding users
-      include: createuser.yml
-      with_items: users

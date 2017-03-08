@@ -1,0 +1,6 @@
+---
+- name: install oathtool
+  become: yes
+  become_method: sudo
+  apt: pkg=oathtool state=installed
+  tags: oathtool

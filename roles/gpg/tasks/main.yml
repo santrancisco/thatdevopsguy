@@ -1,5 +1,5 @@
 ---
-- name: install git
+- name: install gpgv2
   become: yes
   become_method: sudo
   apt: pkg=gpgv2 state=installed

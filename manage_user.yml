@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  vars_files:
+    - .settings.yml
+
+  pre_tasks:
+    - name: Creating users
+      debug:
+        msg: Running Ansible playbook
+
+  tasks:
+    - name: Adding users
+      include: createuser.yml
+      with_items: users

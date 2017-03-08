@@ -132,6 +132,7 @@
 - name: Import gpg key
   become: yes
   become_user: "{{item.name}}"
+  ignore_errors: true
   command: "gpg --import /home/{{item.name}}/tempgpg.key"
   when: item.gpg is defined
 
