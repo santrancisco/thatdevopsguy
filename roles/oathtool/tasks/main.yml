@@ -4,3 +4,17 @@
   become_method: sudo
   apt: pkg=oathtool state=installed
   tags: oathtool
+- name: Create a oauthtool command that take in a seed
+  become: yes
+  become_method: sudo
+  copy:
+    content: |
+      #!/bin/bash
+      echo "Enter seed:"
+      read seed
+      oathtool -b --totp "$seed"
+    dest: "/usr/bin/oauthtool"
+    mode: 0755
+    owner: "root"
+    group: "root"
+

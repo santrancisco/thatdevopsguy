@@ -18,6 +18,8 @@ ansible-vault create .setting.yml
 ## Copy content of setting.yml.sample to this new ansible vault
 ## Then fire it up
 vagrant up
+
+## You will be prompted with the ansible vault password ;)
 ```
 
 Now, you should be able to `vagrant ssh` and switch to pcfdev user, check if cf & uaac commands are working :)

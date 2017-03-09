@@ -20,11 +20,11 @@
 
   roles:
     - roles/git
+    - roles/oathtool
     - roles/gpg
     - roles/ruby
     - roles/pexpect ## pexpect is required to use expect module
     - roles/cf_cli
     - roles/cf_uaac
     - roles/aws_cli
-    - roles/oathtool
 
