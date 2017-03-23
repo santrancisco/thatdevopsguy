@@ -1,0 +1,6 @@
+---
+- name: install jq
+  become: yes
+  become_method: sudo
+  apt: pkg=jq state=installed
+  tags: jq

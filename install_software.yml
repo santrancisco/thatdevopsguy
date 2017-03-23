@@ -27,4 +27,6 @@
     - roles/cf_cli
     - roles/cf_uaac
     - roles/aws_cli
+    - roles/fly
+    - roles/jq
 

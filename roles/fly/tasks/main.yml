@@ -1,0 +1,8 @@
+- name: download concourse client - fly
+  become: yes
+  get_url:
+    url: "https://concourse.z.cld.gov.au/api/v1/cli?arch=amd64&platform=linux"
+    dest: /usr/bin/fly
+    owner: root
+    group: root
+    mode: 0755
