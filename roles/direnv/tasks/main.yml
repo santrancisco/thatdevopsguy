@@ -1,0 +1,8 @@
+- name: "Installing direnv version {{ direnv.version }}"
+  become: yes
+  get_url:
+    url: "https://github.com/direnv/direnv/releases/download/v{{ direnv.version }}/direnv.linux-amd64"
+    dest: /usr/bin/direnv
+    owner: root
+    group: root
+    mode: 0755

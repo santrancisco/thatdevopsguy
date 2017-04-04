@@ -1,0 +1,7 @@
+- name: "Installing ansible version {{ ansible.version }}"
+  become: yes
+  become_method: sudo
+  command: "pip install ansible=={{ ansible.version }}"
+  # gem:
+  #   name: cf-uaac
+  #   state: latest

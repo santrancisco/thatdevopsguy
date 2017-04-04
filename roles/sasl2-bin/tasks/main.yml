@@ -1,0 +1,6 @@
+---
+- name: install sasl2-bin
+  become: yes
+  become_method: sudo
+  apt: pkg=sasl2-bin state=installed
+  tags: sasl2-bin

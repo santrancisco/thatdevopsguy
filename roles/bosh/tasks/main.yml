@@ -1,0 +1,20 @@
+- name: Install dependencies for bosh (assuming ruby is already installed)
+  become: yes
+  become_method: sudo
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - build-essential 
+    - libxml2-dev 
+    - libsqlite3-dev
+    - libxslt1-dev
+    - libpq-dev
+    - libmysqlclient-dev
+    - zlib1g-dev
+
+- name: Installing uaac cli
+  become: yes
+  become_method: sudo
+  command: "gem install bosh_cli --no-ri --no-rdoc"
+  # gem:
+  #   name: cf-uaac
+  #   state: latest

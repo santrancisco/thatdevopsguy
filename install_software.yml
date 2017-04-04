@@ -29,4 +29,8 @@
     - roles/aws_cli
     - roles/fly
     - roles/jq
+    - roles/direnv
+    - roles/ansible
+    - roles/sasl2-bin
+    - roles/bosh
 
